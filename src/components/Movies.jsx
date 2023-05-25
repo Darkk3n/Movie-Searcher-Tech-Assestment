@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 export function ListOfMovies({ movies }) {
 	return (
-		<ul>
+		<ul className="movies">
 			{movies.map((m) => (
-				<li key={m.id}>
+				<li className="movie" key={m.id}>
 					<h3>{m.title}</h3>
-					<p>{m.pear}</p>
+					<p>{m.year}</p>
 					<img src={m.poster} alt={m.title} />
 				</li>
 			))}
