@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import debounce from "just-debounce-it";
+import { useCallback, useRef, useState } from "react";
 import "./App.css";
 import { Movies } from "./components/Movies";
 import { useMovies } from "./hooks/useMovies";
@@ -10,6 +11,14 @@ function App() {
 	const { movies, getMovies, loading } = useMovies({ query, sort });
 	const inputRef = useRef();
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const debounceGetMovies = useCallback(
+		debounce((query) => {
+			getMovies({ query });
+		}, 300),
+		[getMovies]
+	);
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		getMovies({ query });
@@ -17,7 +26,7 @@ function App() {
 	const handleChange = (event) => {
 		const newSearch = event.target.value;
 		setQuery(newSearch);
-		getMovies({ query: newSearch });
+		debounceGetMovies(newSearch);
 	};
 
 	const handleSort = () => {
