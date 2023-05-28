@@ -5,16 +5,13 @@ import { useMovies } from "./hooks/useMovies";
 import { useSearch } from "./hooks/useSearch";
 
 function App() {
-	const { movies } = useMovies();
-	const inputRef = useRef();
-
 	const { query, setQuery, error } = useSearch();
+	const { movies, getMovies } = useMovies({ query });
+	const inputRef = useRef();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const inputEl = inputRef.current;
-		const value = inputEl.value;
-		console.log(value);
+		getMovies();
 	};
 	const handleChange = (event) => {
 		setQuery(event.target.value);
