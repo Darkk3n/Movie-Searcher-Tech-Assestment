@@ -6,7 +6,7 @@ import { useSearch } from "./hooks/useSearch";
 
 function App() {
 	const { query, setQuery, error } = useSearch();
-	const { movies, getMovies } = useMovies({ query });
+	const { movies, getMovies, loading } = useMovies({ query });
 	const inputRef = useRef();
 
 	const handleSubmit = (e) => {
@@ -33,9 +33,7 @@ function App() {
 				</form>
 				{error && <p style={{ color: "red" }}>{error}</p>}
 			</header>
-			<main>
-				<Movies movies={movies} />
-			</main>
+			<main>{loading ? <p>Cargando...</p> : <Movies movies={movies} />}</main>
 		</div>
 	);
 }
