@@ -1,12 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 import { Movies } from "./components/Movies";
 import { useMovies } from "./hooks/useMovies";
 import { useSearch } from "./hooks/useSearch";
 
 function App() {
+	const [sort, setSort] = useState(false);
 	const { query, setQuery, error } = useSearch();
-	const { movies, getMovies, loading } = useMovies({ query });
+	const { movies, getMovies, loading } = useMovies({ query, sort });
 	const inputRef = useRef();
 
 	const handleSubmit = (e) => {
@@ -15,6 +16,10 @@ function App() {
 	};
 	const handleChange = (event) => {
 		setQuery(event.target.value);
+	};
+
+	const handleSort = () => {
+		setSort(!sort);
 	};
 
 	return (
@@ -29,6 +34,7 @@ function App() {
 						onChange={handleChange}
 						placeholder="Avengers, Star Wars, The Matrix..."
 					/>
+					<input type="checkbox" onChange={handleSort} checked={sort} />
 					<button type="submit">Search</button>
 				</form>
 				{error && <p style={{ color: "red" }}>{error}</p>}
