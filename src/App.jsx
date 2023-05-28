@@ -12,10 +12,12 @@ function App() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		getMovies();
+		getMovies({ query });
 	};
 	const handleChange = (event) => {
-		setQuery(event.target.value);
+		const newSearch = event.target.value;
+		setQuery(newSearch);
+		getMovies({ query: newSearch });
 	};
 
 	const handleSort = () => {
